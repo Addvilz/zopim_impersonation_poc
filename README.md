@@ -1,5 +1,18 @@
 ## Zopim live chat impersonation issue (proof of concept)
 
+### Update Aug 2017
+
+Since I last checked (at some point in 2016), Zopim/Zendesk have added a feature that when and if the visitor information is changed after the chat session is started, chat operator receives a log entry in the chat log:
+
+```
+UserX has changed their email address to ceo@yourcompany.com from default@mail.com.
+UserX has changed their name to Mr. Very Important Client.
+```
+
+**Unfortunately, this solves nothing**, as there is still no way to **sign or encrypt the request** to **confirm** that the data sent actually originated from the website.
+
+![hax](./mr_fake_ceo_screen.png "also hax")
+
 ### Issue
 
 Zopim live chat API permits for the website to set various attributes to the chat widget and chat session,
